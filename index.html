@@ -44,40 +44,39 @@
           <span class="text-sm/6 font-semibold text-gray-900">
 
             <script type="text/javascript">
-              var secs = 0;
               
               function countdown() {
                   setTimeout('Decrement()',1000);
               }
+
+              let secs = 0;
               
               function Decrement() {
                   if (document.getElementById) {
                       minutes = document.getElementById("minutes");
                       seconds = document.getElementById("seconds");
-                      // if less than a minute remaining
-                      if (seconds < 59) {
-                          seconds.value = secs;
-                      } else {
-                          minutes.textContent = getminutes();
 
-                          let seconds_temp = getseconds();
-                          if (seconds_temp < 10){
-                            seconds_temp = "0" + seconds_temp;
-                          }
-                          seconds.textContent = seconds_temp;
+                      let new_seconds = getseconds(secs);
+                      let new_minutes = getminutes(secs);
+
+                      if (new_seconds < 10){
+                        new_seconds = "0" + new_seconds;
                       }
+
+                      minutes.textContent = new_minutes;
+                      seconds.textContent = new_seconds;
                       secs++;
                       setTimeout('Decrement()',1000);
                   }
               }
               
-              function getminutes() {
+              function getminutes(seconds) {
                   mins = Math.floor(secs / 60);
                   return mins;
               }
               
-              function getseconds() {
-                  return secs-Math.round(mins *60);
+              function getseconds(seconds) {
+                  return seconds % 60;
               }
               </script>
               
