@@ -41,7 +41,57 @@
             </span>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <span class="text-sm/6 font-semibold text-gray-900">Time: </span>
+          <span class="text-sm/6 font-semibold text-gray-900">
+
+            <script type="text/javascript">
+              var secs = 0;
+              
+              function countdown() {
+                  setTimeout('Decrement()',1000);
+              }
+              
+              function Decrement() {
+                  if (document.getElementById) {
+                      minutes = document.getElementById("minutes");
+                      seconds = document.getElementById("seconds");
+                      // if less than a minute remaining
+                      if (seconds < 59) {
+                          seconds.value = secs;
+                      } else {
+                          minutes.textContent = getminutes();
+
+                          let seconds_temp = getseconds();
+                          if (seconds_temp < 10){
+                            seconds_temp = "0" + seconds_temp;
+                          }
+                          seconds.textContent = seconds_temp;
+                      }
+                      secs++;
+                      setTimeout('Decrement()',1000);
+                  }
+              }
+              
+              function getminutes() {
+                  mins = Math.floor(secs / 60);
+                  return mins;
+              }
+              
+              function getseconds() {
+                  return secs-Math.round(mins *60);
+              }
+              </script>
+              
+              <script>
+              countdown();
+              </script>
+              
+              <div id="timer">
+                  <span disabled id="minutes" class="text-xl ">0</span>
+                  <span class="text-2xl">:</span>
+                  <span disabled id="seconds" class="text-xl">00</span>
+              </div> 
+          </span>
+
         </div>
       </nav>
     </header>
