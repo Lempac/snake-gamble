@@ -1,6 +1,9 @@
 console.log("loaded")
 
-const objects = [
+globalThis.player1 = 0;
+globalThis.player2 = 0;
+
+globalThis.objects = [
     {
         id: 1,
         image: 'apple.png'
@@ -28,7 +31,7 @@ globalThis.elements = [];
 
 
 function drawPoint(){
-    const objectsList = objects[Math.floor(Math.random() * objects.length)];
+    const objectsList = globalThis.objects[Math.floor(Math.random() * globalThis.objects.length)];
     const can = document.getElementById("game-space");
     const ctx = can.getContext("2d");
     const img = new Image();

@@ -7,9 +7,13 @@ var spriteObject = {
     height: 48,
 };
 
-var snake = Object.create(spriteObject);
-snake.x = 100;
-snake.y = 100;
+var snake1 = Object.create(spriteObject);
+snake1.x = 100;
+snake1.y = 100;
+
+var snake2 = Object.create(spriteObject);
+snake1.x = 300;
+snake1.y = 300;
 
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
@@ -17,38 +21,76 @@ image.src = "./assets/snakehead.png";
 
 var speed = 2;
 
-var moveLeft = false;
-var moveRight = false;
-var moveUp = false;
-var moveDown = false;
+var moveLeft1 = false;
+var moveRight1 = false;
+var moveUp1 = false;
+var moveDown1 = false;
+
+var moveLeft2 = false;
+var moveRight2 = false;
+var moveUp2 = false;
+var moveDown2 = false;
 
 window.addEventListener(
     "keydown",
     function (e) {
     switch (e.key) {
         case "ArrowUp":
-        moveDown = false;
-        moveLeft = false;
-        moveRight = false;
-        moveUp = true;
+        moveDown1 = false;
+        moveLeft1 = false;
+        moveRight1 = false;
+        moveUp1 = true;
         break;
         case "ArrowDown":
-        moveDown = true;
-        moveLeft = false;
-        moveRight = false;
-        moveUp = false;
+        moveDown1 = true;
+        moveLeft1 = false;
+        moveRight1 = false;
+        moveUp1 = false;
         break;
         case "ArrowLeft":
-        moveDown = false;
-        moveLeft = true;
-        moveRight = false;
-        moveUp = false;
+        moveDown1 = false;
+        moveLeft1 = true;
+        moveRight1 = false;
+        moveUp1 = false;
         break;
         case "ArrowRight":
-        moveDown = false;
-        moveLeft = false;
-        moveRight = true;
-        moveUp = false;
+        moveDown1 = false;
+        moveLeft1 = false;
+        moveRight1 = true;
+        moveUp1 = false;
+        break;
+    }
+    },
+    false
+);
+
+window.addEventListener(
+    "keydown",
+    function (e) {
+    switch (e.key) {
+        case "W":
+        moveDown1 = false;
+        moveLeft1 = false;
+        moveRight1 = false;
+        moveUp1 = true;
+        break;
+        case "S":
+        moveDown1 = true;
+        moveLeft1 = false;
+        moveRight1 = false;
+        moveUp1 = false;
+        break;
+        case "A":
+        moveDown1 = false;
+        moveLeft1 = true;
+        moveRight1 = false;
+        moveUp1 = false;
+        break;
+        case "D":
+        moveDown1 = false;
+        moveLeft1 = false;
+        moveRight1 = true;
+        moveUp1 = false;
         break;
     }
     },
@@ -63,29 +105,29 @@ function loadHandler() {
 }
 
 function update() {
-    if (moveUp) {
-    snake.y -= speed;
+    if (moveUp1) {
+    snake1.y -= speed;
     }
-    if (moveDown) {
-    snake.y += speed;
+    if (moveDown1) {
+    snake1.y += speed;
     }
-    if (moveLeft) {
-    snake.x -= speed;
+    if (moveLeft1) {
+    snake1.x -= speed;
     }
-    if (moveRight) {
-    snake.x += speed;
+    if (moveRight1) {
+    snake1.x += speed;
     }
-    if (snake.x + snake.width > canvas.width) {
-    snake.x = canvas.width - snake.width;
+    if (snake1.x + snake1.width > canvas.width) {
+    snake1.x = canvas.width - snake1.width;
     }
-    if (snake.x + snake.width <= 0) {
-    snake.x = snake.width;
+    if (snake1.x + snake1.width <= 0) {
+    snake1.x = snake1.width;
     }
-    if (snake.y + snake.height > canvas.height) {
-    snake.y = canvas.height - snake.height;
+    if (snake1.y + snake1.height > canvas.height) {
+    snake1.y = canvas.height - snake1.height;
     }
-    if (snake.y + snake.height < 0) {
-    snake.y = snake.height;
+    if (snake1.y + snake1.height < 0) {
+    snake1.y = snake1.height;
     }
 
     render();
@@ -100,20 +142,54 @@ let rect = {
 
 
 function intersectRect(r1, r2) {
-    return !(r2.x > r1.width ||
-      r2.width < r1.x ||
-      r2.y > r1.height ||
-      r2.height < r1.y);
+    return !(r2.x > r1.width + r1.x ||
+      r2.width+r2.x < r1.x ||
+      r2.y > r1.height+r1.y  ||
+      r2.height+r2.y < r1.y);
   }
 
-function touches(a, b) {
-	// has horizontal gap
-	if (a.x1 > b.x2 || b.x1 > a.x2) return false;
+function overlaps(a, b) {
+// no horizontal overlap
+if (a.x1 >= b.x2 || b.x1 >= a.x2) return false;
 
-	// has vertical gap
-	if (a.y1 > b.y2 || b.y1 > a.y2) return false;
+// no vertical overlap
+if (a.y1 >= b.y2 || b.y1 >= a.y2) return false;
 
-	return true;
+return true;
+}
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function idToPower(id) {
+    switch (id) {
+        case 1:
+            globalThis.player1 += 4;
+            document.getElementById('player1').textContent = globalThis.player1;
+            break;
+        case 5:
+            globalThis.player1 += 1;
+            document.getElementById('player1').textContent = globalThis.player1;
+            break;
+        case 4:
+            globalThis.player1 += 3;
+            document.getElementById('player1').textContent = globalThis.player1;
+            break;
+        case 3:
+            globalThis.player1 += 2;
+            document.getElementById('player1').textContent = globalThis.player1;
+            break;
+        case 2:
+            speed = 10;
+            setTimeout(() => {
+                speed = 5;
+            }, 3000);
+            break;
+
+        default:
+            break;
+    }
 }
 
 function render() {
@@ -121,10 +197,10 @@ function render() {
 
     drawingSurface.drawImage(
         image,
-        Math.floor(snake.x),
-        Math.floor(snake.y),
-        snake.height,
-        snake.width
+        Math.floor(snake1.x),
+        Math.floor(snake1.y),
+        snake1.height,
+        snake1.width
     );
 
     for (const element of globalThis.elements) {
@@ -135,9 +211,13 @@ function render() {
             20,
             20
         )
-        // console.log({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height})
-        console.log(touches({x1: element.position.x, y1: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height}))
-        // console.log(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height}))
+        if(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake1.x, y: snake1.y, width: snake1.width, height: snake1.height})){
+            idToPower(element.id)
+            var index = globalThis.elements.indexOf(element);
+            if (index !== -1) {
+                globalThis.elements.splice(index, 1);
+            }
+        }
     }
     
 
