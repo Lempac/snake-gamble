@@ -56,9 +56,3 @@ function intersectRect(r1, r2) {
       r2.bottom < r1.top);
 }
 
-function createSnake() {
-    const ctx = document.getElementById("game-space").getContext("2d");
-    ctx.fillRect(25, 25, 100, 100);
-    
-}
-

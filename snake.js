@@ -1,10 +1,10 @@
-var canvas = document.querySelector("canvas");
-var drawingSurface = canvas.getContext("2d");
+var canvas;
+var drawingSurface;
 var spriteObject = {
-  x: 0,
-  y: 0,
-  width: 64,
-  height: 64,
+    x: 0,
+    y: 0,
+    width: 64,
+    height: 64,
 };
 
 var snake = Object.create(spriteObject);
@@ -23,77 +23,85 @@ var moveUp = false;
 var moveDown = false;
 
 window.addEventListener(
-  "keydown",
-  function (e) {
+    "keydown",
+    function (e) {
     switch (e.key) {
-      case "ArrowUp":
+        case "ArrowUp":
         moveDown = false;
         moveLeft = false;
         moveRight = false;
         moveUp = true;
         break;
-      case "ArrowDown":
+        case "ArrowDown":
         moveDown = true;
         moveLeft = false;
         moveRight = false;
         moveUp = false;
         break;
-      case "ArrowLeft":
+        case "ArrowLeft":
         moveDown = false;
         moveLeft = true;
         moveRight = false;
         moveUp = false;
         break;
-      case "ArrowRight":
+        case "ArrowRight":
         moveDown = false;
         moveLeft = false;
         moveRight = true;
         moveUp = false;
         break;
     }
-  },
-  false
+    },
+    false
 );
 
 function loadHandler() {
-  update();
+    canvas = document.getElementById("game-space");
+    drawingSurface = canvas.getContext("2d");
+    update();
+    window.requestAnimationFrame(update, canvas);
 }
 
 function update() {
-  window.requestAnimationFrame(update, canvas);
-
-  if (moveUp) {
-    snake.y = -speed;
-  }
-  if (moveDown) {
-    snake.y = +speed;
-  }
-  if (moveLeft) {
-    snake.y = -speed;
-  }
-  if (moveRight) {
-    snake.y = +speed;
-  }
-  if (snake.x + snake.width > canvas.width) {
+    if (moveUp) {
+    snake.y -= speed;
+    }
+    if (moveDown) {
+    snake.y += speed;
+    }
+    if (moveLeft) {
+    snake.x -= speed;
+    }
+    if (moveRight) {
+    snake.x += speed;
+    }
+    if (snake.x + snake.width > canvas.width) {
     snake.x = canvas.width - snake.width;
-  }
-  if (snake.y + snake.height > canvas.height) {
+    }
+    if (snake.x + snake.width <= 0) {
+    snake.x = snake.width;
+    }
+    if (snake.y + snake.height > canvas.height) {
     snake.y = canvas.height - snake.height;
-  }
+    }
+    if (snake.y + snake.height < 0) {
+    snake.y = snake.height;
+    }
 
-  render();
+    console.log(snake.x, snake.y)
+    render();
 }
 
 function render() {
-  drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+    drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
 
-  drawingSurface.drawImage(
+    drawingSurface.drawImage(
     image,
     Math.floor(snake.x),
     Math.floor(snake.y),
     snake.height,
     snake.width
-  );
-
-  setTimeout(() => update(), 1000);
+    );
+    
+    setTimeout(() => update(), 20);
 }
