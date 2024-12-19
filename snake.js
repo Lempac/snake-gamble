@@ -136,6 +136,7 @@ function render() {
             20
         )
         // console.log({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height})
+        console.log(touches({x1: element.position.x, y1: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height}))
         // console.log(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height}))
     }
     
