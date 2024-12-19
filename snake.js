@@ -78,14 +78,14 @@ function update() {
     if (snake.x + snake.width > canvas.width) {
     snake.x = canvas.width - snake.width;
     }
-    if (snake.x + snake.width <= 0) {
-    snake.x = snake.width;
+    if (snake.x  <= 0) {
+    snake.x = 0;
     }
     if (snake.y + snake.height > canvas.height) {
     snake.y = canvas.height - snake.height;
     }
-    if (snake.y + snake.height < 0) {
-    snake.y = snake.height;
+    if (snake.y < 0) {
+    snake.y = 0;
     }
 
     render();
