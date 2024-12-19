@@ -75,17 +75,17 @@ function update() {
     if (moveRight) {
     snake.x += speed;
     }
-    if (snake.x + snake.width > canvas.width) {
-    snake.x = canvas.width - snake.width;
+    if (snake.x > canvas.width) {
+    snake.x = 0 - snake.width + 1;
     }
-    if (snake.x  <= 0) {
-    snake.x = 0;
+    if (snake.x  < 0 - snake.width) {
+    snake.x = canvas.width - 1;
     }
-    if (snake.y + snake.height > canvas.height) {
-    snake.y = canvas.height - snake.height;
+    if (snake.y > snake.height + canvas.height) {
+    snake.y = 0 - snake.height + 1;
     }
-    if (snake.y < 0) {
-    snake.y = 0;
+    if (snake.y < 0 - snake.height) {
+    snake.y = canvas.height -1;
     }
 
     render();
