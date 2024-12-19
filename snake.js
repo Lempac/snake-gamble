@@ -160,7 +160,7 @@ function idToPower(id) {
             document.getElementById('player1').textContent = globalThis.player1;
             break;
         case 2:
-            speed = 10;
+            speed = 7;
             setTimeout(() => {
                 speed = 5;
             }, 3000);
