@@ -12,8 +12,8 @@ snake1.x = 100;
 snake1.y = 100;
 
 var snake2 = Object.create(spriteObject);
-snake2.x = 300;
-snake2.y = 300;
+snake2.x = 600;
+snake2.y = 600;
 
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
@@ -186,9 +186,9 @@ function idToPower(id, player) {
             document.getElementById(`player${player}`).textContent = player === 1 ? globalThis.player1 : globalThis.player2;
             break;
         case 2:
-            speed1 = 7;
+            player === 1 ? speed1 = 7 : speed2 = 7;
             setTimeout(() => {
-                speed1 = 5;
+                player === 1 ? speed1 = 2 : speed2 = 2;
             }, 3000);
             break;
 
