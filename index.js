@@ -33,8 +33,8 @@ function drawPoint(){
     const ctx = can.getContext("2d");
     const img = new Image();
     const position = {
-        x: Math.random() * (can.width - 20),
-        y: Math.random() * (can.height - 20)
+        x: Math.floor(Math.random() * (can.width - 20)),
+        y: Math.floor(Math.random() * (can.height - 20))
     }
     img.src = `./assets/${objectsList.image}`;
     const element = {

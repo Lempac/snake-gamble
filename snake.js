@@ -92,19 +92,29 @@ function update() {
 }
 
 let rect = {
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0
 };
 
 
 function intersectRect(r1, r2) {
-    return !(r2.left > r1.right ||
-      r2.right < r1.left ||
-      r2.top > r1.bottom ||
-      r2.bottom < r1.top);
+    return !(r2.x > r1.width ||
+      r2.width < r1.x ||
+      r2.y > r1.height ||
+      r2.height < r1.y);
   }
+
+function touches(a, b) {
+	// has horizontal gap
+	if (a.x1 > b.x2 || b.x1 > a.x2) return false;
+
+	// has vertical gap
+	if (a.y1 > b.y2 || b.y1 > a.y2) return false;
+
+	return true;
+}
 
 function render() {
     drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
@@ -125,8 +135,8 @@ function render() {
             20,
             20
         )
-        console.log({left: element.position.x,top: element.position.y,right: 20,bottom: 20}, {left: snake.x, top: snake.y, right: snake.width, bottom: snake.height})
-        console.log(intersectRect({left: element.position.x,top: element.position.y,right: 20,bottom: 20}, {left: snake.x, top: snake.y, right: snake.width, bottom: snake.height}))
+        // console.log({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height})
+        // console.log(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake.x, y: snake.y, width: snake.width, height: snake.height}))
     }
     
 
