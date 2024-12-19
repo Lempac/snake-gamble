@@ -23,17 +23,12 @@ const objects = [
     }
 ]
 
-let elements = [];
+globalThis.elements = [];
 
-let rect = {
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0
-};
+
 
 function drawPoint(){
-    const element = objects[Math.floor(Math.random() * objects.length)];
+    const objectsList = objects[Math.floor(Math.random() * objects.length)];
     const can = document.getElementById("game-space");
     const ctx = can.getContext("2d");
     const img = new Image();
@@ -41,18 +36,20 @@ function drawPoint(){
         x: Math.random() * (can.width - 20),
         y: Math.random() * (can.height - 20)
     }
-    img.addEventListener("load", () => {
-        ctx.drawImage(img, position.x, position.y, 20, 20);
-    });
+    img.src = `./assets/${objectsList.image}`;
+    const element = {
+        id: objectsList.id,
+        image: img,
+        position: position
+    }
+    globalThis.elements.push(element);
+    // img.addEventListener("load", () => {
+    //     ctx.drawImage(img, position.x, position.y, 20, 20);
+    // });
 
-    img.src = `./assets/${element.image}`;
+    
 }
 
 
-function intersectRect(r1, r2) {
-    return !(r2.left > r1.right ||
-      r2.right < r1.left ||
-      r2.top > r1.bottom ||
-      r2.bottom < r1.top);
-}
+
 

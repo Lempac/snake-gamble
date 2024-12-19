@@ -3,8 +3,8 @@ var drawingSurface;
 var spriteObject = {
     x: 0,
     y: 0,
-    width: 64,
-    height: 64,
+    width: 48,
+    height: 48,
 };
 
 var snake = Object.create(spriteObject);
@@ -15,7 +15,7 @@ var image = new Image();
 image.addEventListener("load", loadHandler, false);
 image.src = "./assets/snakehead.png";
 
-var speed = 5;
+var speed = 2;
 
 var moveLeft = false;
 var moveRight = false;
@@ -88,20 +88,48 @@ function update() {
     snake.y = snake.height;
     }
 
-    console.log(snake.x, snake.y)
     render();
 }
+
+let rect = {
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0
+};
+
+
+function intersectRect(r1, r2) {
+    return !(r2.left > r1.right ||
+      r2.right < r1.left ||
+      r2.top > r1.bottom ||
+      r2.bottom < r1.top);
+  }
 
 function render() {
     drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
 
     drawingSurface.drawImage(
-    image,
-    Math.floor(snake.x),
-    Math.floor(snake.y),
-    snake.height,
-    snake.width
+        image,
+        Math.floor(snake.x),
+        Math.floor(snake.y),
+        snake.height,
+        snake.width
     );
+
+    for (const element of globalThis.elements) {
+        drawingSurface.drawImage(
+            element.image,
+            element.position.x,
+            element.position.y,
+            20,
+            20
+        )
+        console.log({left: element.position.x,top: element.position.y,right: 20,bottom: 20}, {left: snake.x, top: snake.y, right: snake.width, bottom: snake.height})
+        console.log(intersectRect({left: element.position.x,top: element.position.y,right: 20,bottom: 20}, {left: snake.x, top: snake.y, right: snake.width, bottom: snake.height}))
+    }
     
+
+
     setTimeout(() => update(), 20);
 }
