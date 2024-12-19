@@ -1,12 +1,10 @@
 console.log("loaded")
 
-let 
-
+let elements = []; 
 
 function createSnake() {
-    let snake = document.createElement('div');
-    snake.id = "snake";
+    const ctx = document.getElementById("game-space").getContext("2d");
+    ctx.fillRect(25, 25, 100, 100);
     
-    document.body.appendChild(snake);
 }
 
