@@ -117,49 +117,28 @@ function update() {
     if (moveRight1) {
     snake1.x += speed;
     }
-    if (snake1.x + snake1.width > canvas.width) {
-    snake1.x = canvas.width - snake1.width;
+    if (snake1.x > canvas.width) {
+    snake1.x = 0 - snake1.width + 1;
     }
-    if (snake1.x + snake1.width <= 0) {
-    snake1.x = snake1.width;
+    if (snake1.x  < 0 - snake1.width) {
+    snake1.x = canvas.width - 1;
     }
-    if (snake1.y + snake1.height > canvas.height) {
-    snake1.y = canvas.height - snake1.height;
+    if (snake1.y > snake1.height + canvas.height) {
+    snake1.y = 0 - snake1.height + 1;
     }
-    if (snake1.y + snake1.height < 0) {
-    snake1.y = snake1.height;
+    if (snake1.y < 0 - snake1.height) {
+    snake1.y = canvas.height -1;
     }
 
     render();
 }
 
-let rect = {
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0
-};
-
 
 function intersectRect(r1, r2) {
-    return !(r2.x > r1.width + r1.x ||
-      r2.width+r2.x < r1.x ||
-      r2.y > r1.height+r1.y  ||
-      r2.height+r2.y < r1.y);
-  }
-
-function overlaps(a, b) {
-// no horizontal overlap
-if (a.x1 >= b.x2 || b.x1 >= a.x2) return false;
-
-// no vertical overlap
-if (a.y1 >= b.y2 || b.y1 >= a.y2) return false;
-
-return true;
-}
-
-function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
+return !(r2.x > r1.width + r1.x ||
+    r2.width+r2.x < r1.x ||
+    r2.y > r1.height+r1.y  ||
+    r2.height+r2.y < r1.y);
 }
 
 function idToPower(id) {
