@@ -20,11 +20,17 @@
         UI CODE GOES HERE;
      -->
 
-    <canvas id="game-space" style="position: absolute;" width="800" height="800">
+    <canvas id="game-space" style="position: absolute; background-color: black;" width="1200" height="800">
 
     </canvas>
   </body>
   <script>
-    createSnake();
+    setInterval(() => drawPoint(), 2000);
+
+    function loop() {
+      
+      setTimeout(loop, 0);
+    }
+    loop()
   </script>
 </html>
