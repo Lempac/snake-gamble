@@ -7,7 +7,8 @@
     <script src="./index.js" defer></script>
     <script src="./snake.js" defer></script>
     <style>
-      html, body {
+      html,
+      body {
         margin: 0 !important;
         padding: 0 !important;
       }
@@ -15,90 +16,126 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-
-
     <!-- 
         UI CODE GOES HERE;
      -->
     <header class="bg-white">
-      <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div class="flex lg:flex-1">
-        </div>
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1"></div>
         <div class="flex lg:hidden">
-          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
             <span class="sr-only">Open main menu</span>
-            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              data-slot="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
             </svg>
           </button>
         </div>
+        <div class="font-semibold hidden text-3xl me-20" id="game-status">
+          Game over!
+        </div>
         <div class="hidden lg:flex lg:gap-x-12">
-          <span id="player1" class="inline-flex items-center gap-x-1.5 rounded-full bg-sky-100 px-2 py-1 text-lg font-medium text-sky-700">
+          <span
+            id="player1"
+            class="inline-flex items-center gap-x-1.5 rounded-full bg-sky-100 px-2 py-1 text-lg font-medium text-sky-700"
+          >
             0
           </span>
-             <h1 class="text-3xl font-semibold pb-1">:</h1>
-             <span id="player2" class="inline-flex items-center gap-x-1.5 rounded-full bg-pink-100 px-2 py-1 text-lg font-medium text-pink-700">
-              0
-            </span>
+          <h1 class="text-3xl font-semibold pb-1">:</h1>
+          <span
+            id="player2"
+            class="inline-flex items-center gap-x-1.5 rounded-full bg-pink-100 px-2 py-1 text-lg font-medium text-pink-700"
+          >
+            0
+          </span>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <span class="text-sm/6 font-semibold text-gray-900">
-
             <script type="text/javascript">
-              
               function countdown() {
-                  setTimeout('Decrement()',1000);
+                setTimeout("Decrement()", 1000);
               }
 
               let secs = 0;
-              
+
               function Decrement() {
-                  if (document.getElementById) {
-                      minutes = document.getElementById("minutes");
-                      seconds = document.getElementById("seconds");
+                if (document.getElementById) {
+                  minutes = document.getElementById("minutes");
+                  seconds = document.getElementById("seconds");
 
-                      let new_seconds = getseconds(secs);
-                      let new_minutes = getminutes(secs);
+                  let new_seconds = getseconds(secs);
+                  let new_minutes = getminutes(secs);
 
-                      if (new_seconds < 10){
-                        new_seconds = "0" + new_seconds;
-                      }
-
-                      minutes.textContent = new_minutes;
-                      seconds.textContent = new_seconds;
-                      secs++;
-                      setTimeout('Decrement()',1000);
+                  if (new_seconds < 10) {
+                    new_seconds = "0" + new_seconds;
                   }
-              }
-              
-              function getminutes(seconds) {
-                  mins = Math.floor(secs / 60);
-                  return mins;
-              }
-              
-              function getseconds(seconds) {
-                  return seconds % 60;
-              }
-              </script>
-              
-              <script>
-              countdown();
-              </script>
-              
-              <div id="timer" class="bg-gray-400 rounded px-2 py-1">
-                  <span disabled id="minutes" class="text-4xl font-bold text-zinc-100">0</span>
-                  <span class="text-3xl font-bold text-zinc-50">:</span>
-                  <span disabled id="seconds" class="text-4xl font-bold text-zinc-100">00</span>
-              </div> 
-          </span>
 
+                  minutes.textContent = new_minutes;
+                  seconds.textContent = new_seconds;
+                  secs++;
+                  if (!globalThis.isEnded) {
+                    setTimeout("Decrement()", 1000);
+                  }
+                }
+              }
+
+              function getminutes(seconds) {
+                mins = Math.floor(secs / 60);
+                return mins;
+              }
+
+              function getseconds(seconds) {
+                return seconds % 60;
+              }
+            </script>
+
+            <script>
+              countdown();
+            </script>
+
+            <div id="timer" class="bg-gray-400 rounded px-2 py-1">
+              <span
+                disabled
+                id="minutes"
+                class="text-4xl font-bold text-zinc-100"
+                >0</span
+              >
+              <span class="text-3xl font-bold text-zinc-50">:</span>
+              <span
+                disabled
+                id="seconds"
+                class="text-4xl font-bold text-zinc-100"
+                >00</span
+              >
+            </div>
+          </span>
         </div>
       </nav>
     </header>
 
-
-    <canvas id="game-space" style="position: absolute; background-color: black;" width="1200" height="800">
-
+    <canvas
+      id="game-space"
+      style="position: absolute; background-color: black"
+      width="1200"
+      height="800"
+    >
     </canvas>
   </body>
   <script>

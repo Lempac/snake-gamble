@@ -160,7 +160,7 @@ function idToPower(id) {
             document.getElementById('player1').textContent = globalThis.player1;
             break;
         case 2:
-            speed = 7;
+            speed = 10;
             setTimeout(() => {
                 speed = 5;
             }, 3000);
@@ -170,6 +170,12 @@ function idToPower(id) {
             break;
     }
 }
+
+function end() {
+    drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('game-status').classList.remove('hidden');
+    globalThis.isEnded = true;
+  }
 
 function render() {
     drawingSurface.clearRect(0, 0, canvas.width, canvas.height);

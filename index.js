@@ -3,6 +3,8 @@ console.log("loaded")
 globalThis.player1 = 0;
 globalThis.player2 = 0;
 
+globalThis.isEnded = false;
+
 globalThis.objects = [
     {
         id: 1,
