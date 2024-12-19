@@ -12,14 +12,15 @@ snake1.x = 100;
 snake1.y = 100;
 
 var snake2 = Object.create(spriteObject);
-snake1.x = 300;
-snake1.y = 300;
+snake2.x = 300;
+snake2.y = 300;
 
 var image = new Image();
 image.addEventListener("load", loadHandler, false);
 image.src = "./assets/snakehead.png";
 
-var speed = 2;
+var speed1 = 2;
+var speed2 = 2;
 
 var moveLeft1 = false;
 var moveRight1 = false;
@@ -68,30 +69,30 @@ window.addEventListener(
     "keydown",
     function (e) {
     switch (e.key) {
-        case "W":
-        moveDown1 = false;
-        moveLeft1 = false;
-        moveRight1 = false;
-        moveUp1 = true;
-        break;
-        case "S":
-        moveDown1 = true;
-        moveLeft1 = false;
-        moveRight1 = false;
-        moveUp1 = false;
-        break;
-        case "A":
-        moveDown1 = false;
-        moveLeft1 = true;
-        moveRight1 = false;
-        moveUp1 = false;
-        break;
-        case "D":
-        moveDown1 = false;
-        moveLeft1 = false;
-        moveRight1 = true;
-        moveUp1 = false;
-        break;
+        case "w":
+            moveDown2 = false;
+            moveLeft2 = false;
+            moveRight2 = false;
+            moveUp2 = true;
+            break;
+        case "s":
+            moveDown2 = true;
+            moveLeft2 = false;
+            moveRight2 = false;
+            moveUp2 = false;
+            break;
+        case "a":
+            moveDown2 = false;
+            moveLeft2 = true;
+            moveRight2 = false;
+            moveUp2 = false;
+            break;
+        case "d":
+            moveDown2 = false;
+            moveLeft2 = false;
+            moveRight2 = true;
+            moveUp2 = false;
+            break;
     }
     },
     false
@@ -106,16 +107,16 @@ function loadHandler() {
 
 function update() {
     if (moveUp1) {
-    snake1.y -= speed;
+    snake1.y -= speed1;
     }
     if (moveDown1) {
-    snake1.y += speed;
+    snake1.y += speed1;
     }
     if (moveLeft1) {
-    snake1.x -= speed;
+    snake1.x -= speed1;
     }
     if (moveRight1) {
-    snake1.x += speed;
+    snake1.x += speed1;
     }
     if (snake1.x > canvas.width) {
     snake1.x = 0 - snake1.width + 1;
@@ -130,6 +131,31 @@ function update() {
     snake1.y = canvas.height -1;
     }
 
+    if (moveUp2) {
+    snake2.y -= speed2;
+    }
+    if (moveDown2) {
+    snake2.y += speed2;
+    }
+    if (moveLeft2) {
+    snake2.x -= speed2;
+    }
+    if (moveRight2) {
+    snake2.x += speed2;
+    }
+    if (snake2.x > canvas.width) {
+    snake2.x = 0 - snake2.width + 1;
+    }
+    if (snake2.x  < 0 - snake2.width) {
+    snake2.x = canvas.width - 1;
+    }
+    if (snake2.y > snake2.height + canvas.height) {
+    snake2.y = 0 - snake2.height + 1;
+    }
+    if (snake2.y < 0 - snake2.height) {
+    snake2.y = canvas.height -1;
+    }
+
     render();
 }
 
@@ -141,28 +167,28 @@ return !(r2.x > r1.width + r1.x ||
     r2.height+r2.y < r1.y);
 }
 
-function idToPower(id) {
+function idToPower(id, player) {
     switch (id) {
         case 1:
-            globalThis.player1 += 4;
-            document.getElementById('player1').textContent = globalThis.player1;
+            player === 1 ? globalThis.player1 += 4 : globalThis.player2 += 4;
+            document.getElementById(`player${player}`).textContent = player === 1 ? globalThis.player1 : globalThis.player2;
             break;
         case 5:
-            globalThis.player1 += 1;
-            document.getElementById('player1').textContent = globalThis.player1;
+            player === 1 ? globalThis.player1 += 1 : globalThis.player2 += 1;
+            document.getElementById(`player${player}`).textContent = player === 1 ? globalThis.player1 : globalThis.player2;
             break;
         case 4:
-            globalThis.player1 += 3;
-            document.getElementById('player1').textContent = globalThis.player1;
+            player === 1 ? globalThis.player1 += 3 : globalThis.player2 += 3;
+            document.getElementById(`player${player}`).textContent = player === 1 ? globalThis.player1 : globalThis.player2;
             break;
         case 3:
-            globalThis.player1 += 2;
-            document.getElementById('player1').textContent = globalThis.player1;
+            player === 1 ? globalThis.player1 += 2 : globalThis.player2 += 2;
+            document.getElementById(`player${player}`).textContent = player === 1 ? globalThis.player1 : globalThis.player2;
             break;
         case 2:
-            speed = 7;
+            speed1 = 7;
             setTimeout(() => {
-                speed = 5;
+                speed1 = 5;
             }, 3000);
             break;
 
@@ -182,6 +208,14 @@ function render() {
         snake1.width
     );
 
+    drawingSurface.drawImage(
+        image,
+        Math.floor(snake2.x),
+        Math.floor(snake2.y),
+        snake2.height,
+        snake2.width
+    );
+
     for (const element of globalThis.elements) {
         drawingSurface.drawImage(
             element.image,
@@ -191,7 +225,14 @@ function render() {
             20
         )
         if(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake1.x, y: snake1.y, width: snake1.width, height: snake1.height})){
-            idToPower(element.id)
+            idToPower(element.id, 1);
+            var index = globalThis.elements.indexOf(element);
+            if (index !== -1) {
+                globalThis.elements.splice(index, 1);
+            }
+        }
+        if(intersectRect({x: element.position.x,y: element.position.y, width: 20,height: 20}, {x: snake2.x, y: snake2.y, width: snake2.width, height: snake2.height})){
+            idToPower(element.id, 2);
             var index = globalThis.elements.indexOf(element);
             if (index !== -1) {
                 globalThis.elements.splice(index, 1);
