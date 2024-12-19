@@ -197,6 +197,12 @@ function idToPower(id, player) {
     }
 }
 
+function end() {
+    drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('game-status').classList.remove('hidden');
+    globalThis.isEnded = true;
+  }
+
 function render() {
     drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -215,6 +221,10 @@ function render() {
         snake2.height,
         snake2.width
     );
+
+    if(intersectRect({x: snake1.x, y: snake1.y, width: snake1.width, height: snake1.height}, {x: snake2.x, y: snake2.y, width: snake2.width, height: snake2.height})){
+        end()
+    }
 
     for (const element of globalThis.elements) {
         drawingSurface.drawImage(
@@ -242,5 +252,5 @@ function render() {
     
 
 
-    setTimeout(() => update(), 20);
+    if(!globalThis.isEnded) setTimeout(() => update(), 20);
 }
